@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DesignPro — Premium Creative Subscription</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #18181f;
+    --accent: #c8a96e;
+    --accent2: #7c5cbf;
+    --text: #f0eee8;
+    --muted: #7a7a8a;
+    --border: rgba(200,169,110,0.12);
+    --glow: rgba(200,169,110,0.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 8vw;
+    backdrop-filter: blur(24px);
+    background: rgba(10,10,15,0.80);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--accent); letter-spacing: -0.02em;
+  }
+  .logo-mark span { color: var(--text); }
+  .nav-links { display: flex; align-items: center; gap: 2.5rem; }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: .88rem;
+    font-weight: 500; transition: color .2s;
+  }
+  nav a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #0a0a0f !important;
+    padding: .55rem 1.3rem; border-radius: 4px; font-weight: 700;
+    font-size: .88rem;
+  }
+  .nav-cta:hover { opacity: .88; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 10rem 8vw 8rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 15%, rgba(200,169,110,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 45% 35% at 80% 85%, rgba(124,92,191,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp .8s .2s forwards;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 9vw, 7.5rem);
+    font-weight: 900; line-height: 1.04;
+    letter-spacing: -.03em;
+    opacity: 0; animation: fadeUp .9s .4s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero p.sub {
+    max-width: 560px; margin: 2.5rem auto 0;
+    color: var(--muted); font-size: 1.12rem; line-height: 1.8;
+    font-weight: 300;
+    opacity: 0; animation: fadeUp .9s .6s forwards;
+  }
+  .hero-btns {
+    margin-top: 3.5rem; display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
+    opacity: 0; animation: fadeUp .9s .8s forwards;
+  }
+  .btn-primary {
+    background: var(--accent); color: #0a0a0f;
+    padding: 1rem 2.4rem; border-radius: 4px;
+    font-weight: 700; font-size: 1rem; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 36px rgba(200,169,110,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 44px rgba(200,169,110,0.38); }
+  .btn-ghost {
+    border: 1px solid var(--border); color: var(--text);
+    padding: 1rem 2.4rem; border-radius: 4px;
+    font-weight: 500; font-size: 1rem; text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .scroll-badge {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    color: var(--muted); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase;
+    animation: bounce 2.2s infinite; font-family: 'DM Mono', monospace;
+  }
+  .scroll-badge::after { content: ' ↓'; }
+
+  /* ─── SECTIONS SHARED ─── */
+  section { padding: 9rem 8vw; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 900; line-height: 1.1;
+    letter-spacing: -.025em; margin-bottom: 1.2rem;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 1.05rem; line-height: 1.75;
+    max-width: 500px; font-weight: 300;
+  }
+
+  /* ─── SERVICES ─── */
+  .services { background: var(--surface); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem; margin-top: 5rem;
+  }
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 2.6rem 2.4rem;
+    position: relative; overflow: hidden;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(200,169,110,0.35);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    opacity: 0; transition: opacity .25s;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon { font-size: 2.4rem; margin-bottom: 1.6rem; display: block; }
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem; font-weight: 700; margin-bottom: .8rem;
+  }
+  .service-card p { color: var(--muted); font-size: .95rem; line-height: 1.7; }
+  .ai-badge {
+    display: inline-flex; align-items: center; gap: .35rem;
+    background: rgba(124,92,191,0.15); border: 1px solid rgba(124,92,191,0.35);
+    color: #b89ee0; font-size: .7rem; font-weight: 600;
+    padding: .28rem .65rem; border-radius: 20px;
+    font-family: 'DM Mono', monospace; letter-spacing: .06em;
+    text-transform: uppercase; margin-top: 1.4rem;
+  }
+
+  /* ─── WHY BUY ─── */
+  .why { position: relative; overflow: hidden; }
+  .why::before {
+    content: '';
+    position: absolute; right: -8%; top: 50%; transform: translateY(-50%);
+    width: 45vw; height: 45vw; max-width: 560px; max-height: 560px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,92,191,0.055) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .why-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 900px) { .why-layout { grid-template-columns: 1fr; gap: 4rem; } }
+  .why-points { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .why-point {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.5rem 1.6rem;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: border-color .2s;
+  }
+  .why-point:hover { border-color: rgba(200,169,110,0.3); }
+  .why-point-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: .1rem; }
+  .why-point h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem;
+  }
+  .why-point p { color: var(--muted); font-size: .9rem; line-height: 1.65; }
+
+  /* Price Visual */
+  .why-visual {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 3rem;
+    text-align: center; position: sticky; top: 7rem;
+  }
+  .price-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 5.5rem; font-weight: 900; color: var(--accent); line-height: 1;
+  }
+  .price-display sup { font-size: 2.2rem; vertical-align: top; margin-top: .9rem; display: inline-block; }
+  .price-display sub { font-size: 1.2rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+  .price-note { color: var(--muted); font-size: .88rem; margin-top: .6rem; }
+  .price-divider { border: none; border-top: 1px solid var(--border); margin: 2.2rem 0; }
+  .price-features { list-style: none; text-align: left; display: flex; flex-direction: column; gap: .9rem; }
+  .price-features li {
+    display: flex; align-items: center; gap: .75rem;
+    font-size: .93rem; color: var(--text);
+  }
+  .price-features li::before {
+    content: '✓'; color: var(--accent);
+    font-weight: 700; font-size: 1rem; flex-shrink: 0;
+  }
+
+  /* ─── PROFESSIONALS ─── */
+  .professionals { background: var(--surface); }
+  .prof-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem; margin-top: 5rem;
+  }
+  .prof-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 2.2rem 2rem;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .prof-card:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.45); }
+  .prof-avatar {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1.3rem;
+  }
+  .prof-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem; font-weight: 700; margin-bottom: .2rem;
+  }
+  .prof-role {
+    color: var(--accent); font-size: .8rem; font-weight: 600;
+    font-family: 'DM Mono', monospace; letter-spacing: .05em; margin-bottom: .9rem;
+  }
+  .prof-card p { color: var(--muted); font-size: .88rem; line-height: 1.65; }
+  .prof-ai {
+    margin-top: 1.2rem; padding: .6rem .85rem;
+    background: rgba(200,169,110,0.06); border: 1px solid var(--border);
+    border-radius: 6px; font-size: .78rem; color: var(--accent);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials { overflow: hidden; }
+  .test-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem; margin-top: 5rem;
+  }
+  .test-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 2.4rem 2.2rem;
+    position: relative;
+  }
+  .test-card::before {
+    content: '"';
+    position: absolute; top: 1.2rem; right: 1.8rem;
+    font-family: 'Playfair Display', serif; font-size: 5rem; line-height: 1;
+    color: var(--accent); opacity: .12;
+  }
+  .stars { color: var(--accent); font-size: 1rem; margin-bottom: 1.2rem; }
+  .test-card p { font-size: .95rem; line-height: 1.75; color: var(--muted); font-style: italic; }
+  .test-author { margin-top: 2rem; display: flex; align-items: center; gap: .9rem; }
+  .test-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .test-author-info strong { display: block; font-size: .95rem; font-weight: 600; }
+  .test-author-info span { font-size: .8rem; color: var(--muted); }
+
+  /* ─── CHECKOUT ─── */
+  .checkout { background: var(--surface); text-align: center; }
+  .checkout-box {
+    max-width: 520px; margin: 4rem auto 0;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 3.5rem;
+    position: relative; overflow: hidden;
+  }
+  .checkout-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+  }
+  .checkout-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; font-weight: 900; color: var(--accent);
+  }
+  .checkout-price span { font-size: 1.2rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+  .checkout-sub { color: var(--muted); font-size: .9rem; margin: .6rem 0 2.5rem; }
+  .checkout-features {
+    list-style: none; text-align: left; margin-bottom: 2.5rem;
+    display: flex; flex-direction: column; gap: .85rem;
+  }
+  .checkout-features li {
+    display: flex; align-items: center; gap: .75rem; font-size: .93rem;
+  }
+  .checkout-features li::before { content: '✦'; color: var(--accent); font-size: .7rem; flex-shrink: 0; }
+  #stripe-checkout-btn {
+    width: 100%; padding: 1.15rem;
+    background: var(--accent); color: #0a0a0f;
+    border: none; border-radius: 6px;
+    font-size: 1.1rem; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 32px rgba(200,169,110,0.22);
+  }
+  #stripe-checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 44px rgba(200,169,110,0.38); }
+  #stripe-checkout-btn:active { transform: translateY(0); }
+  #stripe-checkout-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .stripe-note {
+    margin-top: 1.1rem; font-size: .8rem; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; gap: .4rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3.5rem 8vw;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.2rem;
+  }
+  footer p { color: var(--muted); font-size: .85rem; }
+  .footer-links { display: flex; gap: 1.8rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ─── ENV CONFIG BANNER (only visible in dev) ─── */
+  .env-banner {
+    background: rgba(200,169,110,0.08);
+    border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 8px; padding: 1.2rem 1.6rem;
+    margin: 5rem auto 0; max-width: 620px;
+    font-family: 'DM Mono', monospace; font-size: .8rem;
+    color: var(--muted); display: none;
+  }
+  .env-banner.show { display: block; }
+  .env-banner strong { color: var(--accent); display: block; margin-bottom: .6rem; font-size: .85rem; }
+  .env-banner code {
+    display: block; background: rgba(0,0,0,0.3);
+    padding: .5rem .8rem; border-radius: 4px;
+    margin: .3rem 0; color: #b89ee0; font-size: .78rem;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-9px); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity .75s ease, transform .75s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-mark">Design<span>Pro</span></div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#why">Why Us</a>
+    <a href="#team">Team</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#checkout" class="nav-cta">Get Started — $25/mo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <p class="hero-eyebrow">Premium Creative Subscription</p>
+  <h1>Where <em>Ideas</em><br>Become Iconic<br>Brands</h1>
+  <p class="sub">Access a full creative studio — logo design, copywriting, branding, and AI-powered tools — all in one monthly subscription. Built for founders, creators, and businesses that refuse to look average.</p>
+  <div class="hero-btns">
+    <a href="#checkout" class="btn-primary">Start for $25 / month</a>
+    <a href="#services" class="btn-ghost">Explore Services ↓</a>
+  </div>
+  <div class="scroll-badge">Scroll to explore</div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="reveal">
+    <p class="section-label">What You Get</p>
+    <h2 class="section-title">Everything a Brand<br>Could Ever Need</h2>
+    <p class="section-sub">From your first logo to your final campaign — our platform covers the entire creative spectrum, powered by cutting-edge AI tailored for each discipline.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">◈</span>
+      <h3>Logo & Brand Identity</h3>
+      <p>Professional logo design, typography systems, color palettes, and complete brand identity packages that make your business unforgettable from day one.</p>
+      <span class="ai-badge">✦ AI-Powered Logo Studio</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">✍</span>
+      <h3>Professional Copywriting</h3>
+      <p>Taglines, website copy, product descriptions, ads, and brand voice guides. Writing that converts visitors into loyal customers and tells your story with impact.</p>
+      <span class="ai-badge">✦ AI Writing Assistant</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">⬡</span>
+      <h3>Visual & Graphic Design</h3>
+      <p>Social media assets, banners, presentations, pitch decks, and marketing materials. A full design team in your pocket, available 24/7 at a flat monthly rate.</p>
+      <span class="ai-badge">✦ AI Design Engine</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">◎</span>
+      <h3>UI/UX Design</h3>
+      <p>Beautiful, user-centered interfaces for apps and websites. Wireframes, mockups, and prototypes that balance aesthetics with intuitive functionality.</p>
+      <span class="ai-badge">✦ AI UX Analyzer</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">✶</span>
+      <h3>Creative Strategy</h3>
+      <p>Market positioning, brand storytelling, competitor analysis, and launch strategy. We don't just design — we help you build a brand that dominates its niche.</p>
+      <span class="ai-badge">✦ AI Strategy Tool</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">⬧</span>
+      <h3>Find Your Professional</h3>
+      <p>Browse and connect with vetted human creatives — logo designers, writers, UI specialists — hand-matched to your project needs and budget.</p>
+      <span class="ai-badge">✦ AI Talent Matching</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY BUY -->
+<section class="why" id="why">
+  <div class="why-layout">
+    <div>
+      <p class="section-label reveal">Why Subscribe</p>
+      <h2 class="section-title reveal">Six Reasons This<br>Subscription Pays<br>for Itself</h2>
+      <div class="why-points">
+        <div class="why-point reveal">
+          <span class="why-point-icon">🤖</span>
+          <div>
+            <h4>Dedicated AI per Profession</h4>
+            <p>Each creative field gets its own specialised AI model — a logo AI thinks differently than a copywriting AI. No more generic tools.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <span class="why-point-icon">⚡</span>
+          <div>
+            <h4>Unlimited Requests, Zero Waiting</h4>
+            <p>Submit as many design and writing requests as you need. Your subscription never limits how much you can create.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <span class="why-point-icon">🏆</span>
+          <div>
+            <h4>Premium Quality, Startup Price</h4>
+            <p>Agency-quality output at a fraction of the cost. A single logo from a design agency costs more than a full year of DesignPro.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <span class="why-point-icon">🔒</span>
+          <div>
+            <h4>You Own Everything</h4>
+            <p>Full commercial rights to every asset created. Your logos, copy, and designs are legally yours — forever, no questions asked.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <span class="why-point-icon">🌐</span>
+          <div>
+            <h4>Global Talent Network</h4>
+            <p>Access 500+ vetted designers and writers worldwide. If you need a human touch, we'll match you with the perfect professional in minutes.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <span class="why-point-icon">📈</span>
+          <div>
+            <h4>Cancel Anytime, Keep Your Assets</h4>
+            <p>No contracts, no lock-in. Subscribe, create, cancel — everything you've made stays in your account permanently.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div class="price-display"><sup>$</sup>25<sub>/mo</sub></div>
+      <p class="price-note">Everything included. No hidden fees.</p>
+      <hr class="price-divider"/>
+      <ul class="price-features">
+        <li>Unlimited logo design requests</li>
+        <li>AI copywriting & writing assistant</li>
+        <li>AI graphic design engine</li>
+        <li>AI UI/UX analyzer</li>
+        <li>AI creative strategy tool</li>
+        <li>Access to professional network</li>
+        <li>Commercial rights to all assets</li>
+        <li>Priority support & feedback</li>
+        <li>Cancel anytime — keep everything</li>
+      </ul>
+      <a href="#checkout" class="btn-primary" style="display:block;text-align:center;margin-top:2.2rem;">Subscribe Now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM / PROFESSIONALS -->
+<section class="professionals" id="team">
+  <div class="reveal">
+    <p class="section-label">Our Network</p>
+    <h2 class="section-title">Meet the Professionals<br>Ready to Help You</h2>
+    <p class="section-sub">Every subscriber gains instant access to our curated network of creative experts. Browse by specialty, read their work, and connect in minutes.</p>
+  </div>
+  <div class="prof-grid">
+    <div class="prof-card reveal">
+      <div class="prof-avatar">🎨</div>
+      <h4>Aria Fontaine</h4>
+      <div class="prof-role">Logo Designer</div>
+      <p>Specialises in minimalist brand marks and wordmarks for tech startups. 8+ years, 200+ brands delivered.</p>
+      <div class="prof-ai">AI Tool: Logo Studio Pro ✦</div>
+    </div>
+    <div class="prof-card reveal">
+      <div class="prof-avatar">✍️</div>
+      <h4>Marcus Webb</h4>
+      <div class="prof-role">Brand Copywriter</div>
+      <p>Crafts conversion-focused copy for SaaS, e-commerce, and consumer brands. His taglines have launched three IPOs.</p>
+      <div class="prof-ai">AI Tool: CopyMind Writer ✦</div>
+    </div>
+    <div class="prof-card reveal">
+      <div class="prof-avatar">📐</div>
+      <h4>Yuki Tanaka</h4>
+      <div class="prof-role">UI/UX Designer</div>
+      <p>Award-winning product designer. Creates intuitive, beautiful interfaces that users love and businesses profit from.</p>
+      <div class="prof-ai">AI Tool: UX Compass AI ✦</div>
+    </div>
+    <div class="prof-card reveal">
+      <div class="prof-avatar">🖼️</div>
+      <h4>Sofia Renard</h4>
+      <div class="prof-role">Visual Designer</div>
+      <p>Full-spectrum visual designer — from social content to campaign assets. Clients include Fortune 500 marketing teams.</p>
+      <div class="prof-ai">AI Tool: Visual Engine Pro ✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="reveal">
+    <p class="section-label">What Clients Say</p>
+    <h2 class="section-title">Loved by Founders,<br>Creators & Studios</h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>I launched my entire brand in 3 days using DesignPro. The logo AI gave me 40 concepts in an hour — I never could have afforded this from an agency. Game changer for bootstrapped founders.</p>
+      <div class="test-author">
+        <div class="test-avatar">🚀</div>
+        <div class="test-author-info">
+          <strong>Jake Morrison</strong>
+          <span>SaaS Founder, San Francisco</span>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>The copywriting AI understands brand voice better than any freelancer I've hired. I use it daily for emails, ads, and website copy. At $25 a month it's the best business investment I've made.</p>
+      <div class="test-author">
+        <div class="test-avatar">💼</div>
+        <div class="test-author-info">
+          <strong>Priya Sharma</strong>
+          <span>E-commerce Owner, London</span>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>Being able to find and hire a professional designer directly through the platform — matched by AI to my exact needs — saved me weeks of searching. Worth every penny and then some.</p>
+      <div class="test-author">
+        <div class="test-avatar">🎯</div>
+        <div class="test-author-info">
+          <strong>Léa Dubois</strong>
+          <span>Creative Director, Paris</span>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>I was skeptical at first. Now DesignPro handles all the design work for my agency's overflow. The quality is astonishing and the $25 price point is genuinely unbelievable for what you get.</p>
+      <div class="test-author">
+        <div class="test-avatar">⚡</div>
+        <div class="test-author-info">
+          <strong>Carlos Mendez</strong>
+          <span>Agency Owner, Barcelona</span>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>The UI design AI rebuilt our app's onboarding flow in one session. Our conversion rate went up 34% the week after we shipped the new design. This tool literally paid for itself 100x over.</p>
+      <div class="test-author">
+        <div class="test-avatar">📱</div>
+        <div class="test-author-info">
+          <strong>Hana Kobayashi</strong>
+          <span>Product Manager, Tokyo</span>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>As a solo freelancer, having access to a full AI creative suite at this price is surreal. I now offer more services to my clients and keep 100% of the profit. DesignPro changed my career.</p>
+      <div class="test-author">
+        <div class="test-avatar">🌟</div>
+        <div class="test-author-info">
+          <strong>Noah Fischer</strong>
+          <span>Freelance Designer, Berlin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT -->
+<section class="checkout" id="checkout">
+  <div class="reveal">
+    <p class="section-label">Start Today</p>
+    <h2 class="section-title">One Subscription.<br>Infinite Creativity.</h2>
+    <p class="section-sub" style="margin:0 auto;">Join thousands of founders and creators who've replaced their entire design budget with DesignPro. No risk — cancel anytime.</p>
+  </div>
+  <div class="checkout-box reveal">
+    <div class="checkout-price">$25 <span>/ month</span></div>
+    <p class="checkout-sub">Billed monthly. Cancel anytime. Keep your assets.</p>
+    <ul class="checkout-features">
+      <li>All AI creative tools (Logo, Copy, Design, UI/UX)</li>
+      <li>Access to professional talent network</li>
+      <li>Unlimited requests & revisions</li>
+      <li>Full commercial rights to all work</li>
+      <li>Priority customer support</li>
+      <li>New AI tools added every month</li>
+    </ul>
+    <button id="stripe-checkout-btn" onclick="redirectToCheckout()">
+      🔒 Subscribe Now — $25 / month
+    </button>
+    <p class="stripe-note">🔒 Secure payment powered by Stripe</p>
+  </div>
+
+  <!-- ENV CONFIG GUIDE -->
+  <div class="env-banner show" id="env-guide">
+    <strong>⚙️ Developer Setup — Stripe Checkout Redirect</strong>
+    Set the two variables below in your environment or directly in the script. The button will redirect users to Stripe's hosted Checkout page.
+    <code>STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxx</code>
+    <code>STRIPE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx</code>
+    <code>SUCCESS_URL=https://yourdomain.com/success</code>
+    <code>CANCEL_URL=https://yourdomain.com/#checkout</code>
+    <br>
+    To create a Price ID: Stripe Dashboard → Products → Add Product → Add Price → copy the <em>price_xxx</em> ID.
+    <br><br>
+    This banner is only shown in development. Remove the <em>.show</em> class from <em>#env-guide</em> before going live.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo-mark">Design<span>Pro</span></div>
+  <p>© 2025 DesignPro. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<!-- STRIPE JS -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+// ══════════════════════════════════════════════════════
+//  STRIPE CHECKOUT — REDIRECT FLOW (recommended for subscriptions)
+//  Replace the four values below with your real ones.
+// ══════════════════════════════════════════════════════
+
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_WITH_YOUR_PUBLISHABLE_KEY';
+// Create this in Stripe Dashboard → Products → Add Price
+const STRIPE_PRICE_ID        = 'price_REPLACE_WITH_YOUR_PRICE_ID';
+// Where to send the user after successful payment
+const SUCCESS_URL            = 'https://yourdomain.com/success';
+// Where to send the user if they cancel / close Stripe
+const CANCEL_URL             = window.location.href;
+
+// ── Redirect to Stripe Hosted Checkout ───────────────
+async function redirectToCheckout() {
+  const btn = document.getElementById('stripe-checkout-btn');
+  btn.textContent = 'Redirecting to Stripe…';
+  btn.disabled = true;
+
+  try {
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{ price: STRIPE_PRICE_ID, quantity: 1 }],
+      mode: 'subscription',
+      successUrl: SUCCESS_URL,
+      cancelUrl: CANCEL_URL,
+    });
+
+    // Only reaches here if redirect failed
+    if (error) {
+      console.error('Stripe error:', error.message);
+      alert('Something went wrong: ' + error.message);
+      btn.textContent = '🔒 Subscribe Now — $25 / month';
+      btn.disabled = false;
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Could not connect to Stripe. Please check your publishable key.');
+    btn.textContent = '🔒 Subscribe Now — $25 / month';
+    btn.disabled = false;
+  }
+}
+
+// ── Scroll Reveal ─────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
